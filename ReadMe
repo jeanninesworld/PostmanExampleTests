@@ -1,0 +1,5 @@
+In this collection you will find an example GET call to a generic website.  In the tests section of the request, you will find the following validations.
+-Status Code 200
+-Specific results returned within the array
+-Schema Tests
+-Setting collection variables
