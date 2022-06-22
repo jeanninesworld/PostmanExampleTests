@@ -1,0 +1,159 @@
+{
+	"info": {
+		"_postman_id": "580236ee-a66c-44b9-97bf-8eefbc4c357c",
+		"name": "Jeannines",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2913743"
+	},
+	"item": [
+		{
+			"name": "GetUsers",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Testing successful status code\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"//Testing specific results returned within data array\r",
+							"let jsonData = pm.response.json();\r",
+							"//console.log(jsonData); \r",
+							"\r",
+							"//console.log(jsonData.data[0].email);\r",
+							"\r",
+							"    let email = jsonData.data[0].email;   \r",
+							"    pm.test(\"Verify email of first result returned in Data Array\", function(){\r",
+							"    pm.expect(email).to.eql(\"george.bluth@reqres.in\");\r",
+							"    });\r",
+							"\r",
+							"    let avatar = jsonData.data[0].avatar;   \r",
+							"    pm.test(\"Verify avatar of first result returned in Data Array\", function(){\r",
+							"    pm.expect(avatar).to.eql(\"https://reqres.in/img/faces/1-image.jpg\");\r",
+							"    });\r",
+							"\r",
+							"    let support = jsonData.support.url;\r",
+							"    pm.test(\"Verify support url returned in support Array\", function(){\r",
+							"    pm.expect(support).to.eql(\"https://reqres.in/#support-heading\");\r",
+							"    });\r",
+							"\r",
+							"//Validate Schema\r",
+							"var schema =  {\r",
+							"    \"type\": \"object\",\r",
+							"    \"required\": [\r",
+							"        \"page\",\r",
+							"        \"per_page\",\r",
+							"        \"total\",\r",
+							"        \"total_pages\",\r",
+							"        \"data\"\r",
+							"    ],\r",
+							"    \"properties\": {\r",
+							"        \"page\": {\r",
+							"            \"type\": \"number\"\r",
+							"        },\r",
+							"        \"per_page\": {\r",
+							"            \"type\": \"number\"\r",
+							"        },\r",
+							"        \"total\": {\r",
+							"            \"type\": \"number\",           \r",
+							"        },  \r",
+							"        \"total_pages\": {\r",
+							"            \"type\": \"number\",           \r",
+							"        },\r",
+							"        \"data\": {\r",
+							"            \"type\": \"array\",              \r",
+							"        \"items\": {\r",
+							"                \"type\": \"object\",\r",
+							"                \"required\": [\r",
+							"                    \"id\",\r",
+							"                    \"email\",\r",
+							"                    \"first_name\",\r",
+							"                    \"last_name\",\r",
+							"                    \"avatar\"                    \r",
+							"                ],\r",
+							"                \"properties\": {\r",
+							"                    \"id\": {\r",
+							"                        \"type\": \"number\"\r",
+							"                    },\r",
+							"                    \"email\": {\r",
+							"                        \"type\": \"string\"\r",
+							"                    },\r",
+							"                    \"first_name\": {\r",
+							"                        \"type\": \"string\"\r",
+							"                    },\r",
+							"                    \"last_name\": {\r",
+							"                        \"type\": \"string\"\r",
+							"                    },\r",
+							"                    \"avatar\": {\r",
+							"                        \"type\": \"string\"\r",
+							"                    }\r",
+							"                }\r",
+							"            }\r",
+							"        }\r",
+							"    }\r",
+							"}\r",
+							"\r",
+							"    pm.test(\"Validate schema\", () => {\r",
+							"    pm.response.to.have.jsonSchema(schema);\r",
+							"});\r",
+							"\r",
+							"//set collection variables for future use in testing\r",
+							"    const response = pm.response.json();\r",
+							"console.log(response.data[0].email);\r",
+							"\r",
+							"let collectionEmail = response.data[0].email;\r",
+							"pm.collectionVariables.set(\"email\", email);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://reqres.in/api/users?page=1",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "email",
+			"value": ""
+		}
+	]
+}
